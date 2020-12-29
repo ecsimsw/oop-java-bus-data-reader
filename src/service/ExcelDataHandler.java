@@ -29,14 +29,14 @@ public class ExcelDataHandler {
         return excelDataHandler;
     }
 
-    public void readUserData(String path) throws IOException {
+    public void readUserData(String path) throws Exception {
         FileInputStream file = new FileInputStream(path);
         HSSFWorkbook workbook = new HSSFWorkbook(file);
 
         HSSFSheet sheet = workbook.getSheetAt(0);
         int rows = sheet.getPhysicalNumberOfRows();
-        for (int rowindex = 0; rowindex < rows; rowindex++) {
-            HSSFRow row = sheet.getRow(rowindex);
+        for (int rowIndex = 0; rowIndex < rows; rowIndex++) {
+            HSSFRow row = sheet.getRow(rowIndex);
             if (row != null) {
                 String pid = String.format("%06d", Integer.parseInt(getCellData(row.getCell(PID_INDEX))));
                 String name = getCellData(row.getCell(NAME_INDEX));
@@ -54,11 +54,8 @@ public class ExcelDataHandler {
     private String getCellData(HSSFCell cell) {
         CellType cellType = null;
         String value = "";
-        try {
-            cellType = cell.getCellType();
-        } catch (NullPointerException e) {
-            System.out.print(e.getMessage());
-        }
+
+        cellType = cell.getCellType();
 
         if (cellType == CellType.FORMULA) {
             value = cell.getCellFormula();

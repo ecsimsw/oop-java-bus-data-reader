@@ -32,42 +32,41 @@ public class TextDataHandler {
         return textDataHandler;
     }
 
-    public void readHistory(String filePath, LocalDate from, LocalDate to, String busName, int price) throws IOException {
+    public void readHistory(String filePath, LocalDate from, LocalDate to, String busName, int price) throws Exception {
         String path = filePath.replaceAll("\\\\", "\\\\\\\\");
         File file = new File(path);
         try {
-            if (file.exists()) {
-                BufferedReader inFile = new BufferedReader(new FileReader(file));
+            BufferedReader inFile = new BufferedReader(new FileReader(file));
+            inFile.readLine();  // 첫 줄 제외
 
-                String line = null;
-                inFile.readLine();
-                while ((line = inFile.readLine()) != null) {
-                    String[] splited = line.split(SEPARATOR);
-                    String pid = String.format("%06d", Integer.parseInt(splited[PID_INDEX]));
+            String line;
+            while ((line = inFile.readLine()) != null) {
+                String[] splited = line.split(SEPARATOR);
+                String pid = String.format("%06d", Integer.parseInt(splited[PID_INDEX]));
 
-                    LocalDateTime dateTime;
-                    try {
-                        dateTime = LocalDateTime.parse(splited[DATE_INDEX],
-                                DateTimeFormatter.ofPattern(Configuration.getDateTimeFormat()));
-                    } catch (Exception e) {
-                        dateTime = LocalDateTime.parse(splited[DATE_INDEX],
-                                DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"));
-                    }
+                LocalDateTime dateTime = parseToLocalDateTime(splited[DATE_INDEX]);
 
-                    if (isInvalidPID(pid)) {
-                        continue;
-                    }
-
-                    if (isNotInRange(from, to, dateTime)) {
-                        continue;
-                    }
-
-                    saveInRepository(new History(pid, dateTime, busName, price));
+                if (isInvalidPID(pid) || isNotInRange(from, to, dateTime)) {
+                    continue;
                 }
+
+                saveInRepository(new History(pid, dateTime, busName, price));
             }
         } catch (Exception e) {
-            System.out.print(e.getMessage());
+            throw new Exception("잘못된 버스 기록 파일입니다.");
         }
+    }
+
+    private LocalDateTime parseToLocalDateTime(String stringDateTime){
+        LocalDateTime dateTime;
+        try {
+            dateTime = LocalDateTime.parse(stringDateTime,
+                    DateTimeFormatter.ofPattern(Configuration.getDateTimeFormat()));
+        } catch (Exception e) {
+            dateTime = LocalDateTime.parse(stringDateTime,
+                    DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"));
+        }
+        return dateTime;
     }
 
     private boolean isInvalidPID(String pid) {

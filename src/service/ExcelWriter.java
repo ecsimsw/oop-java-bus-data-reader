@@ -24,7 +24,7 @@ public class ExcelWriter {
         this.basePath = basePath;
     }
 
-    public String writeExcelFile() throws FileNotFoundException {
+    public String writeExcelFile() throws Exception {
         String path = makeFilePath();
 
         File file = new File(path);
@@ -36,7 +36,7 @@ public class ExcelWriter {
             workbook.write(fos);
             fos.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new Exception("파일 쓰기 오류입니다.");
         }
 
         return path;

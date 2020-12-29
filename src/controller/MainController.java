@@ -36,12 +36,8 @@ public class MainController {
     }
 
     private void readConfigureFile() throws Exception {
-        try {
-            String line = ReadConfigureFile.readFile(Configuration.getConfigureFilePath());
-            setPrices(line);
-        } catch (Exception e) {
-            throw new Exception("잘못된 요금 정보 파일입니다.");
-        }
+        String line = ReadConfigureFile.readFile(Configuration.getConfigureFilePath());
+        setPrices(line);
     }
 
     private void setPrices(String line) {
@@ -62,28 +58,20 @@ public class MainController {
     }
 
     private void readBusDataFile() throws Exception {
-        try {
-            TextDataHandler textDataHandler = TextDataHandler.getInstance();
-            for (int busIndex = 0; busIndex < historyPaths.size(); busIndex++) {
-                textDataHandler.readHistory(
-                        historyPaths.get(busIndex),
-                        dateFrom,
-                        dateTo,
-                        Configuration.getBusNames()[busIndex],
-                        BUS_PRICES[busIndex]);
-            }
-        } catch (Exception e) {
-            throw new Exception("잘못된 버스 데이터 파일입니다.");
+        TextDataHandler textDataHandler = TextDataHandler.getInstance();
+        for (int busIndex = 0; busIndex < historyPaths.size(); busIndex++) {
+            textDataHandler.readHistory(
+                    historyPaths.get(busIndex),
+                    dateFrom,
+                    dateTo,
+                    Configuration.getBusNames()[busIndex],
+                    BUS_PRICES[busIndex]);
         }
     }
 
     private void writeResultFile() throws Exception {
-        try{
-            ExcelWriter excelWriter = new ExcelWriter(Configuration.getSavePath());
-            excelWriter.writeExcelFile();
-        }catch (Exception e){
-            throw new Exception("잘못된 결과 목록 엑셀 파일 생성 위치입니다.");
-        }
+        ExcelWriter excelWriter = new ExcelWriter(Configuration.getSavePath());
+        excelWriter.writeExcelFile();
     }
 
     private int getDataCount() {
