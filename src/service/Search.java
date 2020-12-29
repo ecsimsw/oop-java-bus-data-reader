@@ -32,8 +32,9 @@ public class Search {
                 saveResult(user, sameUsers);
                 index_history += sameUsers.size();
             }
+
             if(!userTable.containsKey(pid)){
-                saveResult(new User(pid, "Non-user", "사원 파일에 없는 사용자 입니다.", "FFFFFF"),HistoryRepository.getHistory(index_history));
+                saveResult(new User(pid, "Non-user", "사원 정보가 없는 사용자 입니다.", "FFFFFF"),HistoryRepository.getHistory(index_history));
                 index_history++;
             }
         }
@@ -45,7 +46,7 @@ public class Search {
 
     private static void saveResult(User user, List<History> historiesSameUser){
         for(History history : historiesSameUser){
-            user.updatePrice(history.getPrice());
+            user.updateAmount(history.getPrice());
             ResultRepository.addResult(new Result(user, history));
         }
     }

@@ -30,7 +30,7 @@ public class Result implements Comparable<Result>{
     }
 
     public int getTotalPrice(){
-        return user.getPrice();
+        return user.getAmount();
     }
 
     public int getBusPrice(){

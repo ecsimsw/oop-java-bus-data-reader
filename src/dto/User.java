@@ -6,14 +6,14 @@ public class User implements Comparable<User>{
     private String name;
     private String section;
     private String cardId;
-    private int price;
+    private int amount;
 
     public User(String pid, String name, String section, String cardId) {
         this.cardId = cardId;
         this.name = name;
         this.pid = pid;
         this.section = section;
-        price = 0;
+        this.amount = 0;
     }
 
     public boolean isPid(String pid){
@@ -36,12 +36,12 @@ public class User implements Comparable<User>{
         return this.cardId;
     }
 
-    public int getPrice(){
-        return this.price;
+    public int getAmount(){
+        return this.amount;
     }
 
-    public void updatePrice(int additionPrice){
-        price += additionPrice;
+    public void updateAmount(int additionPrice){
+        amount += additionPrice;
     }
 
     @Override
@@ -59,6 +59,6 @@ public class User implements Comparable<User>{
 
     @Override
     public String toString() {
-        return pid + ", " + name + ", " + section + ", " + cardId+ ", "+ price;
+        return pid + ", " + name + ", " + section + ", " + cardId+ ", "+ amount;
     }
 }

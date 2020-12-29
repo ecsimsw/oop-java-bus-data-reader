@@ -21,7 +21,7 @@ public class History implements Comparable<History>{
     }
 
     public String getDateTimeString(){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Configuration.getDateTimeFormat());
         return localDateTime.format(formatter);
     }
 
@@ -44,6 +44,6 @@ public class History implements Comparable<History>{
 
     @Override
     public String toString() {
-        return busName + ", " +localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        return busName + ", " +localDateTime.format(DateTimeFormatter.ofPattern(Configuration.getDateTimeFormat()));
     }
 }

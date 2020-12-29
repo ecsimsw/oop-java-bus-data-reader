@@ -16,6 +16,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class ExcelWriter {
+    private static final String RESULT_FILE_NAME = "yyyy-MM-dd HH-mm-ss";
+    private static final String FILE_EXTENSION = ".xlsx";
     private final String basePath;
 
     public ExcelWriter(String basePath) {
@@ -41,8 +43,8 @@ public class ExcelWriter {
     }
 
     private String makeFilePath(){
-        String dateTimeString = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH-mm-ss"));
-        return basePath +"\\"+ dateTimeString + ".xlsx";
+        String dateTimeString = LocalDateTime.now().format(DateTimeFormatter.ofPattern(RESULT_FILE_NAME));
+        return basePath +"\\"+ dateTimeString + FILE_EXTENSION;
     }
 
     private void writeResult(XSSFSheet sheet){
@@ -62,7 +64,7 @@ public class ExcelWriter {
             if (prevUser != user) {
                 row++; // 빈 라인
                 curRow = sheet.createRow(row);
-                createResultSummery(curRow, result);
+                createSummery(curRow, result);
                 row++;
                 prevUser = user;
             } else {
@@ -73,7 +75,7 @@ public class ExcelWriter {
         }
     }
 
-    private void createResultSummery(XSSFRow curRow, Result result) {
+    private void createSummery(XSSFRow curRow, Result result) {
         curRow.createCell(0).setCellValue(result.getPid());
         curRow.createCell(1).setCellValue(result.getName());
         curRow.createCell(2).setCellValue(result.getSection());

@@ -1,5 +1,6 @@
 package service;
 
+import dto.Configuration;
 import dto.History;
 import repository.HistoryRepository;
 
@@ -20,10 +21,11 @@ public class TextDataHandler {
 
     private static TextDataHandler textDataHandler;
 
-    private TextDataHandler(){}
+    private TextDataHandler() {
+    }
 
     public static TextDataHandler getInstance() {
-        if(textDataHandler == null){
+        if (textDataHandler == null) {
             textDataHandler = new TextDataHandler();
         }
 
@@ -34,7 +36,6 @@ public class TextDataHandler {
         String path = filePath.replaceAll("\\\\", "\\\\\\\\");
         File file = new File(path);
         try {
-
             if (file.exists()) {
                 System.out.println(path);
                 BufferedReader inFile = new BufferedReader(new FileReader(file));
@@ -46,13 +47,12 @@ public class TextDataHandler {
                     String pid = String.format("%06d", Integer.parseInt(splited[PID_INDEX]));
 
                     LocalDateTime dateTime;
-                    try{
+                    try {
                         dateTime = LocalDateTime.parse(splited[DATE_INDEX],
-                                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-                    }
-                    catch (Exception e){
+                                DateTimeFormatter.ofPattern(Configuration.getDateTimeFormat()));
+                    } catch (Exception e) {
                         dateTime = LocalDateTime.parse(splited[DATE_INDEX],
-                                DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"));
+                                DateTimeFormatter.ofPattern(Configuration.getDateTimeFormat()));
                     }
 
                     if (isInvalidPID(pid)) {
@@ -66,7 +66,7 @@ public class TextDataHandler {
                     saveInRepository(new History(pid, dateTime, busName, price));
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.print(e.getMessage());
         }
     }
