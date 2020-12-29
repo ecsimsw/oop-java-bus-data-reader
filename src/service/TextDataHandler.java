@@ -37,7 +37,6 @@ public class TextDataHandler {
         File file = new File(path);
         try {
             if (file.exists()) {
-                System.out.println(path);
                 BufferedReader inFile = new BufferedReader(new FileReader(file));
 
                 String line = null;
@@ -52,7 +51,7 @@ public class TextDataHandler {
                                 DateTimeFormatter.ofPattern(Configuration.getDateTimeFormat()));
                     } catch (Exception e) {
                         dateTime = LocalDateTime.parse(splited[DATE_INDEX],
-                                DateTimeFormatter.ofPattern(Configuration.getDateTimeFormat()));
+                                DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"));
                     }
 
                     if (isInvalidPID(pid)) {

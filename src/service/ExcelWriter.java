@@ -62,7 +62,7 @@ public class ExcelWriter {
 
             XSSFRow curRow = sheet.createRow(row);
             if (prevUser != user) {
-                row++; // 빈 라인
+                row++;
                 curRow = sheet.createRow(row);
                 createSummery(curRow, result);
                 row++;
