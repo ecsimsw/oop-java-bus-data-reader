@@ -38,6 +38,16 @@ public class History implements Comparable<History>{
     }
 
     @Override
+    public boolean equals(Object o){
+        if(o instanceof History){
+            if(((History) o).pid.equals(this.pid) && ((History) o).localDateTime.equals(this.localDateTime)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
     public int compareTo(History o) {
         return this.pid.compareTo(o.pid);
     }
