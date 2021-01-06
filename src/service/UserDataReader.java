@@ -9,24 +9,24 @@ import org.apache.poi.ss.usermodel.CellType;
 import repository.UserRepository;
 
 import java.io.FileInputStream;
-import java.io.IOException;
-public class ExcelDataHandler {
+
+public class UserDataReader {
     private static final int PID_INDEX = 0;
     private static final int NAME_INDEX = 1;
     private static final int SECTION_INDEX = 2;
     private static final int CARDID_INDEX = 3;
 
-    private static ExcelDataHandler excelDataHandler;
+    private static UserDataReader userDataReader;
 
-    private ExcelDataHandler() {
+    private UserDataReader() {
 
     }
 
-    public static ExcelDataHandler getInstance() {
-        if (excelDataHandler == null) {
-            excelDataHandler = new ExcelDataHandler();
+    public static UserDataReader getInstance() {
+        if (userDataReader == null) {
+            userDataReader = new UserDataReader();
         }
-        return excelDataHandler;
+        return userDataReader;
     }
 
     public void readUserData(String path) throws Exception {

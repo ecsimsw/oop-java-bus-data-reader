@@ -50,17 +50,17 @@ public class MainController {
 
     private void readUserDataFile() throws Exception {
         try {
-            ExcelDataHandler excelDataHandler = ExcelDataHandler.getInstance();
-            excelDataHandler.readUserData(Configuration.getUserDataPath());
+            UserDataReader userDataReader = UserDataReader.getInstance();
+            userDataReader.readUserData(Configuration.getUserDataPath());
         } catch (Exception e) {
             throw new Exception("잘못된 사원 정보 파일입니다.");
         }
     }
 
     private void readBusDataFile() throws Exception {
-        TextDataHandler textDataHandler = TextDataHandler.getInstance();
+        TagRecordDataReader tagRecordDataReader = TagRecordDataReader.getInstance();
         for (int busIndex = 0; busIndex < historyPaths.size(); busIndex++) {
-            textDataHandler.readHistory(
+            tagRecordDataReader.readHistory(
                     historyPaths.get(busIndex),
                     dateFrom,
                     dateTo,

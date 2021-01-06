@@ -15,7 +15,9 @@ public class HistoryRepository {
     private static List<History> histories = new LinkedList<>();
 
     public static void addHistory(History history) {
-        histories.add(history);
+        if(!histories.contains(history)){
+            histories.add(history);
+        }
     }
 
     public static List<History> getHistories(){

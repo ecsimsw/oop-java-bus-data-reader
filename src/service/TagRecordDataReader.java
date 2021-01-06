@@ -7,29 +7,28 @@ import repository.HistoryRepository;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class TextDataHandler {
+public class TagRecordDataReader {
     private static final int PID_INDEX = 1;
     private static final int DATE_INDEX = 9;
     private static final String SEPARATOR = "\t";
     private static final String INVALID_PID_CODE = "-00001";
     private static final String TEST_PID_CODE = "000005";
 
-    private static TextDataHandler textDataHandler;
+    private static TagRecordDataReader tagRecordDataReader;
 
-    private TextDataHandler() {
+    private TagRecordDataReader() {
     }
 
-    public static TextDataHandler getInstance() {
-        if (textDataHandler == null) {
-            textDataHandler = new TextDataHandler();
+    public static TagRecordDataReader getInstance() {
+        if (tagRecordDataReader == null) {
+            tagRecordDataReader = new TagRecordDataReader();
         }
 
-        return textDataHandler;
+        return tagRecordDataReader;
     }
 
     public void readHistory(String filePath, LocalDate from, LocalDate to, String busName, int price) throws Exception {
