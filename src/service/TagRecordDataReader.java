@@ -34,6 +34,11 @@ public class TagRecordDataReader {
     public void readHistory(String filePath, LocalDate from, LocalDate to, String busName, int price) throws Exception {
         String path = filePath.replaceAll("\\\\", "\\\\\\\\");
         File file = new File(path);
+
+        if(filePath.trim().equals("")){
+            return;
+        }
+
         try {
             BufferedReader inFile = new BufferedReader(new FileReader(file));
             inFile.readLine();  // 첫 줄 제외
